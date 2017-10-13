@@ -1,13 +1,13 @@
-DB = Sequel.sqlite
+db = Sequel.sqlite
 
 class User
   include MiniModel
 end
 
-User.dataset = DB[:users]
+User.dataset = db[:users]
 
 class Post
   include MiniModel
 end
 
-Post.dataset = DB[:posts]
+Post.dataset = db[:posts]

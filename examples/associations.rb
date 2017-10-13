@@ -3,6 +3,8 @@ class User
 
   attribute :email
 
+  child :profile, :Profile
+
   children :photos, :Photo
 
   children :photo_comments, :PhotoComment
@@ -14,6 +16,12 @@ class User
   def comments
     photo_comments + video_comments
   end
+end
+
+class Profile
+  include MiniModel
+
+  parent :user, :User
 end
 
 class Photo
@@ -42,24 +50,12 @@ class Comment
   attribute :body
 
   parent :user, :User
-
-  def subject
-    raise NotImplementedError, "#subject must be defined on subclasses of Comment"
-  end
 end
 
 class PhotoComment < Comment
   parent :photo, :Photo
-
-  def subject
-    photo
-  end
 end
 
 class VideoComment < Comment
   parent :video, :Video
-
-  def subject
-    video
-  end
 end
