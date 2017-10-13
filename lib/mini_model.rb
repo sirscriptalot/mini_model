@@ -1,5 +1,5 @@
 module MiniModel
-  VERSION = '0.0.0'
+  VERSION = '0.0.1'
 
   class Error < StandardError; end
 
@@ -36,12 +36,8 @@ module MiniModel
       end
     end
 
-    def build(attributes)
-      if attributes
-        new(attributes)
-      else
-        nil
-      end
+    def build(dataset)
+      dataset.map { |attributes| new(attributes) }
     end
 
     # Convenience for initializin and persisting a
@@ -51,19 +47,25 @@ module MiniModel
     end
 
     def [](id)
-      build(dataset.first(id: id))
+      first(id: id)
     end
 
     def first(*args, &block)
-      build(dataset.first(*args, &block))
+      attributes = dataset.first(*args, &block)
+
+      if attributes
+        new(attributes)
+      else
+        nil
+      end
     end
 
     def all(&block)
-      dataset.all(&block).map { |each| build(each) }
+      build(dataset.all(&block))
     end
 
     def where(*args, &block)
-      dataset.where(*args, &block).map { |each| build(each) }
+      build(dataset.where(*args, &block))
     end
 
     def to_foreign_key

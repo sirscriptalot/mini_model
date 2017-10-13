@@ -95,16 +95,14 @@ test '::attribute defines accessor methods' do
   assert user.respond_to?(:email=)
 end
 
-test '::build returns an instance when given a hash' do
-  user = User.build({})
+test '::build concerts a dataset to an array of model instances' do
+  User.create(email: 'one@example.com')
 
-  assert user.is_a?(User)
-end
+  models = User.build(User.dataset.all)
 
-test '::build returns nil when given a falsey value' do
-  user = User.build(false)
+  assert models.is_a?(Array)
 
-  assert user.nil?
+  assert models[0].is_a?(User)
 end
 
 test '::create creates an instance and persists it in the database' do

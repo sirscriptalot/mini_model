@@ -42,7 +42,7 @@ but the basics look something like:
 
 `::attribute` Macro for generating an accessor for the attributes hash.
 
-`::build` Builds a new instance of the model when given attributes.
+`::build` Converts a dataset to an array of model instances.
 
 `::create` Convenience for `new(attributes).create`.
 
