@@ -1,5 +1,5 @@
 module MiniModel
-  VERSION = '0.0.1'
+  VERSION = '0.0.2'
 
   class Error < StandardError; end
 
@@ -151,13 +151,16 @@ module MiniModel
 
   # #attributes= is vulnerable to mass assignment attacks if used
   # directly with user input. Some sort of filter must be in place
-  # before setting attributes or initializing a new model. Sending
-  # a key in the hash argument that doesn't have an accessor raises an error.
+  # before setting attributes or initializing a new model.
   def attributes=(attributes)
     @attributes = {}
 
     attributes.each do |key, value|
-      send(:"#{key}=", value)
+      writer = :"#{key}="
+
+      if respond_to?(writer)
+        send(writer, value)
+      end
     end
   end
 

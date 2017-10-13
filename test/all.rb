@@ -248,12 +248,12 @@ test '#attributes= resets all attributes, but not id' do
   assert_equal user.email, user.attributes[:email]
 end
 
-test '#attributes= raises when there is no accessor for a key' do
+test '#attributes= ignores keys without a writer' do
   user = User.new
 
-  assert_raise do
-    user.attributes = { foo: :bar }
-  end
+  user.attributes = { foo: :bar }
+
+  assert !user.attributes.has_key?(:foo)
 end
 
 setup do

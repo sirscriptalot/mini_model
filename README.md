@@ -78,9 +78,8 @@ We don't want to be assigning nil all over our associations and what have you.
 
 `#attributes` Gets the attributes hash.
 
-`#attributes=` For each key/value in the given hash, sends the writer to self.
-This means it'll be a missing method if you have not created the writer via the
-`::attribute` macro, or manually. This is not safe to use with user input.
+`#attributes=` For each key/value in the given hash, sends the writer (from key)
+to self if the method exists.
 
 `#==` Compares two models to see if they are equals. It ensures that the class,
 id, and attributes of each are the same.
